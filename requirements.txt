@@ -1,0 +1,15 @@
+fastapi
+uvicorn[standard]
+langchain
+langgraph
+langchain-google-genai
+asyncpg
+sqlalchemy[asyncio]
+pydantic
+python-dotenv
+httpx
+alembic
+pytest
+pytest-asyncio
+pytest-httpx
+requests
