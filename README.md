@@ -50,7 +50,6 @@ Database
 ## Prerequisites
 
 Python 3.10 or higher
-Docker and Docker Compose
 PostgreSQL 14 or higher
 Google API Key (for Gemini LLM)
 
@@ -79,9 +78,13 @@ cp .env.example .env
 # Edit .env and add your Google API key
 ```
 
-5. Start the system with Docker Compose:
+5. Start the system:
 ```bash
-docker-compose up -d
+uvicorn orchestrator.app.main:app --host 0.0.0.0 --port 8000
+uvicorn api_servers.flashcard_generator.app.main:app --host 0.0.0.0 --port 8001
+uvicorn api_servers.note_maker.app.main:app --host 0.0.0.0 --port 8002
+uvicorn api_servers.concept_explainer.app.main:app --host 0.0.0.0 --port 8003
+uvicorn api_servers.quiz_generator.app.main:app --host 0.0.0.0 --port 8004
 ```
 
 This will start:
@@ -90,7 +93,7 @@ This will start:
 - Note Maker on port 8002
 - Concept Explainer on port 8003
 - Quiz Generator on port 8004
-- PostgreSQL on port 5432
+- PostgreSQL: For postgres, start your postgreSQL server from cmd and make a demo DB
 
 ## Project Structure
 
@@ -103,7 +106,6 @@ YoLearn.ai/
 │   │   ├── schemas.py         # Pydantic data models
 │   │   ├── prompts.py         # LLM prompts
 │   │   └── database.py        # Database operations
-│   ├── Dockerfile
 │   └── requirements.txt
 ├── api_servers/
 │   ├── flashcard_generator/
@@ -116,7 +118,6 @@ YoLearn.ai/
 │       └── app/main.py
 ├── tests/
 │   └── test_orchestrator.py
-├── docker-compose.yml
 ├── README.md
 └── requirements.txt
 ```
@@ -124,9 +125,6 @@ YoLearn.ai/
 ## Quick Start
 
 1. Start all services:
-```bash
-docker-compose up -d
-```
 
 2. Check health of orchestrator:
 ```bash
@@ -184,11 +182,6 @@ QUIZ_GENERATOR_API_URL: URL of quiz generator service
 Run the test suite:
 ```bash
 pytest tests/test_orchestrator.py -v -s
-```
-
-Run specific test:
-```bash
-pytest tests/test_orchestrator.py::TestOrchestratorWorkflow::test_flashcard_generator_scenario -v
 ```
 
 Tests cover:
