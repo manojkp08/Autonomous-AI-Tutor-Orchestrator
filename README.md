@@ -95,6 +95,15 @@ This will start:
 - Quiz Generator on port 8004
 - PostgreSQL: For postgres, start your postgreSQL server from cmd and make a demo DB
 
+## Screenshot
+
+<img width="1999" height="1211" alt="image" src="https://github.com/user-attachments/assets/385668d2-6966-479d-8d79-c15380d842f3" />
+<img width="1976" height="1289" alt="image" src="https://github.com/user-attachments/assets/3ce93e0c-d950-448e-bcc2-bfb7033cc3ad" />
+<img width="2044" height="1410" alt="image" src="https://github.com/user-attachments/assets/daefbadf-8e40-454d-b8b9-79729f8bc9c8" />
+<img width="2013" height="1313" alt="image" src="https://github.com/user-attachments/assets/45929528-c044-4583-ad72-86332e87e1ef" />
+
+
+
 ## Project Structure
 
 ```
@@ -251,24 +260,11 @@ To add a new tool:
 2. Add to tool registry with keywords and parameters
 3. No changes needed to core orchestrator
 
-## Deployment
-
-For production deployment:
-
-1. Set up PostgreSQL database on server
-2. Configure environment variables for production
-3. Use Docker Compose or Kubernetes for orchestration
-4. Add authentication and API key management
-5. Set up logging and monitoring
-6. Configure rate limiting and caching
-7. Use load balancer for high availability
-
 ## Performance Considerations
 
 The system is designed for scalability:
 - Async/await throughout eliminates blocking operations
 - Microservices can scale independently
-- Database queries are optimized
 - Tool responses are cacheable
 - Keyword-based intent recognition is faster than LLM-only approach
 
