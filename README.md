@@ -102,6 +102,121 @@ This will start:
 <img width="2044" height="1410" alt="image" src="https://github.com/user-attachments/assets/daefbadf-8e40-454d-b8b9-79729f8bc9c8" />
 <img width="2013" height="1313" alt="image" src="https://github.com/user-attachments/assets/45929528-c044-4583-ad72-86332e87e1ef" />
 
+## Workflow
+
+```mermaid
+graph TD
+    A[Student Sends Message] -->|user_id, message, chat_history| B[Orchestrator Receives Request]
+    
+    B --> C[Retrieve Student Profile from Database]
+    C --> D{Profile Found?}
+    D -->|Yes| E[Load Student Data]
+    D -->|No| F[Use Default Profile]
+    
+    E --> G[Analyze Educational Context]
+    F --> G
+    
+    G --> G1[Infer Teaching Style]
+    G --> G2[Infer Emotional State]
+    G --> G3[Infer Mastery Level]
+    G --> G4[Infer Difficulty]
+    
+    G1 --> H{Context Complete?}
+    G2 --> H
+    G3 --> H
+    G4 --> H
+    
+    H -->|Yes| I[Create Educational Context Object]
+    H -->|No| J[Use Default Context]
+    I --> K[Perform Intent Analysis]
+    J --> K
+    
+    K --> K1[Try LLM-based Analysis]
+    K1 --> K2{LLM Success?}
+    K2 -->|Yes| K3[Extract Tool Name from LLM]
+    K2 -->|No| K4[Use Keyword Fallback Matching]
+    
+    K3 --> L{Intent Recognized?}
+    K4 --> L
+    
+    L -->|Flashcard| M1[Extract Flashcard Parameters]
+    L -->|Note Maker| M2[Extract Note Maker Parameters]
+    L -->|Concept| M3[Extract Concept Explainer Parameters]
+    L -->|Quiz| M4[Extract Quiz Generator Parameters]
+    L -->|Unknown| M5[Return Help Message]
+    
+    M1 --> N[Validate Parameters Against Schema]
+    M2 --> N
+    M3 --> N
+    M4 --> N
+    
+    N --> N1{Parameters Valid?}
+    N1 -->|Yes| O[Build API Request]
+    N1 -->|No| P[Use Fallback Parameters]
+    O --> Q{Tool Selected?}
+    P --> Q
+    
+    Q -->|Flashcard| R1[Send to Port 8001]
+    Q -->|Note Maker| R2[Send to Port 8002]
+    Q -->|Concept| R3[Send to Port 8003]
+    Q -->|Quiz| R4[Send to Port 8004]
+    Q -->|None| R5[Return Error Response]
+    
+    R1 --> S1[Flashcard Service Processes Request]
+    R2 --> S2[Note Maker Service Processes Request]
+    R3 --> S3[Concept Explainer Service Processes Request]
+    R4 --> S4[Quiz Generator Service Processes Request]
+    R5 --> Z[Return to Student]
+    
+    S1 --> T1[Apply Educational Context]
+    S2 --> T2[Apply Educational Context]
+    S3 --> T3[Apply Educational Context]
+    S4 --> T4[Apply Educational Context]
+    
+    T1 --> U1[Generate Content with Gemini AI]
+    T2 --> U2[Generate Content with Gemini AI]
+    T3 --> U3[Generate Content with Gemini AI]
+    T4 --> U4[Generate Content with Gemini AI]
+    
+    U1 --> V1[Format Flashcard Response]
+    U2 --> V2[Format Note Response]
+    U3 --> V3[Format Concept Response]
+    U4 --> V4[Format Quiz Response]
+    
+    V1 --> W[Return Response to Orchestrator]
+    V2 --> W
+    V3 --> W
+    V4 --> W
+    
+    W --> X{Response Success?}
+    X -->|Yes| Y[Format Final Response with Context]
+    X -->|No| Y1[Return Error with Fallback]
+    
+    Y --> Z
+    Y1 --> Z
+    Z --> Z1[Send Response to Student]
+    Z1 --> AA[Update Session/Chat History]
+    AA --> AB[End]
+    
+    M5 --> Z
+    
+    style A fill:#e1f5ff
+    style B fill:#fff3e0
+    style G fill:#f3e5f5
+    style K fill:#e8f5e9
+    style M1 fill:#fce4ec
+    style M2 fill:#fce4ec
+    style M3 fill:#fce4ec
+    style M4 fill:#fce4ec
+    style S1 fill:#c8e6c9
+    style S2 fill:#c8e6c9
+    style S3 fill:#c8e6c9
+    style S4 fill:#c8e6c9
+    style W fill:#ffe0b2
+    style Z fill:#b3e5fc
+    style AB fill:#90caf9
+
+```
 
 
 ## Project Structure
